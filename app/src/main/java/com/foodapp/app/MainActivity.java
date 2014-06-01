@@ -1,21 +1,16 @@
 package com.foodapp.app;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 
@@ -31,6 +26,7 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    private int JC = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +109,9 @@ public class MainActivity extends Activity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
+        public PlaceholderFragment() {
+        }
+
         /**
          * Returns a new instance of this fragment for the given section
          * number.
@@ -123,9 +122,6 @@ public class MainActivity extends Activity
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
             return fragment;
-        }
-
-        public PlaceholderFragment() {
         }
 
         @Override
