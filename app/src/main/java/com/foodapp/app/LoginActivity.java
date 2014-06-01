@@ -3,6 +3,7 @@ package com.foodapp.app;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
@@ -235,6 +236,10 @@ public class LoginActivity extends PlusBaseActivity implements LoaderCallbacks<C
                 revokeAccess();
             }
         });
+
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+
     }
 
     @Override
