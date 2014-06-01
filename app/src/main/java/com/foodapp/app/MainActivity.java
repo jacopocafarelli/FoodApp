@@ -26,7 +26,7 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private int JC = 1;
+    private boolean JC_DEVI_FARE_RIFLETTI = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
