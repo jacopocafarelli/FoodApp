@@ -8,16 +8,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.foodapp.app.fragments.MainFragment">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <android.opengl.GLSurfaceView
         android:id="@+id/effectsview"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/section_label"
-        />
+        android:layout_alignParentBottom="true"
+        android:background="@color/red_semitransparent"
+        android:padding="@dimen/bottom_bar_padding">
+        <ImageView
+            android:id="@+id/iv_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -2,12 +2,14 @@ package com.foodapp.app.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.view.Window;
@@ -22,6 +24,8 @@ import javax.microedition.khronos.opengles.GL10;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+
+import com.foodapp.app.TakePictureActivity;
 import com.foodapp.app.imageUtils.TextureRenderer;
 import com.foodapp.app.imageUtils.GLToolbox;
 import android.view.Menu;
@@ -32,7 +36,7 @@ import android.view.MenuItem;
 import com.foodapp.app.R;
 
 
-public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
+public class MainFragment extends Fragment implements GLSurfaceView.Renderer, View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CATEGORY = "category";
 
@@ -48,7 +52,8 @@ public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
     private int mImageWidth;
     private int mImageHeight;
     private boolean mInitialized = false;
-    int mCurrentEffect;
+    private int mCurrentEffect;
+    private ImageView mIvCamera;
 
     public void setCurrentEffect(int effect) {
         mCurrentEffect = effect;
@@ -93,6 +98,9 @@ public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
         mEffectView.setRenderer(this);
         mEffectView.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
         mCurrentEffect = R.id.none;
+
+        mIvCamera = (ImageView) view.findViewById(R.id.iv_camera);
+        mIvCamera.setOnClickListener(this);
 
         return view;
     }
@@ -325,6 +333,13 @@ public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
 
     public void setCategoryAndRefresh(int category) {
         mCategory = category;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.iv_camera) {
+            startActivity(new Intent(getActivity(), TakePictureActivity.class));
+        }
     }
 
 
