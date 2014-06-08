@@ -110,8 +110,7 @@ public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -321,6 +320,11 @@ public class MainFragment extends Fragment implements GLSurfaceView.Renderer {
         setCurrentEffect(item.getItemId());
         mEffectView.requestRender();
         return true;
+    }
+
+
+    public void setCategoryAndRefresh(int category) {
+        mCategory = category;
     }
 
 

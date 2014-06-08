@@ -53,19 +53,14 @@ public class TextureRenderer {
         mProgram = GLToolbox.createProgram(VERTEX_SHADER, FRAGMENT_SHADER);
 
         // Bind attributes and uniforms
-        mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram,
-                "tex_sampler");
+        mTexSamplerHandle = GLES20.glGetUniformLocation(mProgram, "tex_sampler");
         mTexCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_texcoord");
         mPosCoordHandle = GLES20.glGetAttribLocation(mProgram, "a_position");
 
         // Setup coordinate buffers
-        mTexVertices = ByteBuffer.allocateDirect(
-                TEX_VERTICES.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mTexVertices = ByteBuffer.allocateDirect(TEX_VERTICES.length * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mTexVertices.put(TEX_VERTICES).position(0);
-        mPosVertices = ByteBuffer.allocateDirect(
-                POS_VERTICES.length * FLOAT_SIZE_BYTES)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
+        mPosVertices = ByteBuffer.allocateDirect(POS_VERTICES.length * FLOAT_SIZE_BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
         mPosVertices.put(POS_VERTICES).position(0);
     }
 
@@ -101,11 +96,9 @@ public class TextureRenderer {
         GLES20.glDisable(GLES20.GL_BLEND);
 
         // Set the vertex attributes
-        GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false,
-                0, mTexVertices);
+        GLES20.glVertexAttribPointer(mTexCoordHandle, 2, GLES20.GL_FLOAT, false, 0, mTexVertices);
         GLES20.glEnableVertexAttribArray(mTexCoordHandle);
-        GLES20.glVertexAttribPointer(mPosCoordHandle, 2, GLES20.GL_FLOAT, false,
-                0, mPosVertices);
+        GLES20.glVertexAttribPointer(mPosCoordHandle, 2, GLES20.GL_FLOAT, false, 0, mPosVertices);
         GLES20.glEnableVertexAttribArray(mPosCoordHandle);
         GLToolbox.checkGlError("vertex attribute setup");
 

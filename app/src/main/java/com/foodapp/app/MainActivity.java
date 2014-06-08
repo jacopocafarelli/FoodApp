@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -28,7 +29,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private int JC = 1;
+
+    private FragmentManager mFragmentManager;
+    private MainFragment mMainFragment;
+
+    private int mSelectedCategory;
+
+    private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
+    private static final String SELECTED_CATEGORY = "SELECTED_CATEGORY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,18 +47,42 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         mTitle = getTitle();
 
         // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+        mFragmentManager = getFragmentManager();
+
+        handleFragmentVisibility(savedInstanceState);
+
+    }
+
+
+    private void handleFragmentVisibility(Bundle savedInstance) {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+
+        // Get fragments by tag
+        mMainFragment = (MainFragment) mFragmentManager.findFragmentByTag(MAIN_FRAGMENT);
+
+        if (mMainFragment == null) {
+            mMainFragment = MainFragment.newInstance(0);
+
+            if (savedInstance == null) {
+                fragmentTransaction.add(R.id.container, mMainFragment, MAIN_FRAGMENT);
+                fragmentTransaction.show(mMainFragment);
+                fragmentTransaction.commit();
+            } else {
+                mSelectedCategory = savedInstance.getInt(SELECTED_CATEGORY);
+                mMainFragment.setCategoryAndRefresh(mSelectedCategory);
+            }
+
+        }
+
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, MainFragment.newInstance(position + 1))
-                .commit();
+        mSelectedCategory = position;
+        // update the main content
+        if (mMainFragment != null)
+            mMainFragment.setCategoryAndRefresh(position);
     }
 
     public void onSectionAttached(int number) {
@@ -65,6 +97,12 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
                 mTitle = getString(R.string.title_section3);
                 break;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(SELECTED_CATEGORY, mSelectedCategory);
     }
 
     public void restoreActionBar() {
