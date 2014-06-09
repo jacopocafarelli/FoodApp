@@ -3,37 +3,33 @@ package com.foodapp.app.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.effect.Effect;
+import android.media.effect.EffectContext;
+import android.media.effect.EffectFactory;
 import android.net.Uri;
+import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
+import android.opengl.GLUtils;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.view.Window;
-import android.media.effect.Effect;
-import android.media.effect.EffectContext;
-import android.media.effect.EffectFactory;
-import android.opengl.GLES20;
-import android.opengl.GLSurfaceView;
-import android.opengl.GLUtils;
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-
-import com.foodapp.app.TakePictureActivity;
-import com.foodapp.app.imageUtils.TextureRenderer;
-import com.foodapp.app.imageUtils.GLToolbox;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
 
 import com.foodapp.app.R;
+import com.foodapp.app.TakePictureActivity;
+import com.foodapp.app.imageUtils.GLToolbox;
+import com.foodapp.app.imageUtils.TextureRenderer;
+
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 
 public class MainFragment extends Fragment implements GLSurfaceView.Renderer, View.OnClickListener {

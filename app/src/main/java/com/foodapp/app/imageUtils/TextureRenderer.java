@@ -1,6 +1,7 @@
 package com.foodapp.app.imageUtils;
 
 import android.opengl.GLES20;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
