@@ -21,6 +21,11 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private SurfaceHolder mHolder;
     private Camera mCamera;
     private List<Camera.Size> mSupportedPreviewSizes;
+
+    public Camera.Size getPreviewSize() {
+        return mPreviewSize;
+    }
+
     private Camera.Size mPreviewSize;
 
     public CameraPreview(Context context, Camera camera) {
@@ -75,6 +80,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             parameters.setRotation(90);
             parameters.setFlashMode("auto");
             parameters.setFocusMode("continuous-picture");
+            parameters.s
 
             mCamera.setParameters(parameters);
             mCamera.setDisplayOrientation(90);

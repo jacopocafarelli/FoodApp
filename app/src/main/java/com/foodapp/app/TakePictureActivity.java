@@ -1,13 +1,12 @@
 package com.foodapp.app;
 
 import android.app.Activity;
-import android.graphics.Rect;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -19,9 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 public class TakePictureActivity extends Activity implements Camera.AutoFocusCallback {
@@ -48,58 +45,6 @@ public class TakePictureActivity extends Activity implements Camera.AutoFocusCal
                 }
         );
 
-    }
-
-    @Override
-    public boolean onTouchEvent(final MotionEvent event)
-    {
-        if (event.getAction() == MotionEvent.ACTION_UP)
-        {
-            float x = event.getX();
-            float y = event.getY();
-            float touchMajor = event.getTouchMajor();
-            float touchMinor = event.getTouchMinor();
-
-            Rect touchRect = new Rect((int)(x - touchMajor / 2), (int)(y - touchMinor / 2), (int)(x + touchMajor / 2), (int)(y + touchMinor / 2));
-
-            this.submitFocusAreaRect(touchRect);
-        }
-        return true;
-    }
-
-    private void submitFocusAreaRect(final Rect touchRect)
-    {
-        Camera.Parameters cameraParameters = mCamera.getParameters();
-
-        if (cameraParameters.getMaxNumFocusAreas() == 0)
-        {
-            return;
-        }
-
-        // Convert from View's width and height to +/- 1000
-
-        Rect focusArea = new Rect();
-
-        focusArea.set(touchRect.left * 2000 / mPreview.getWidth() - 1000,
-                touchRect.top * 2000 / mPreview.getHeight() - 1000,
-                touchRect.right * 2000 / mPreview.getWidth() - 1000,
-                touchRect.bottom * 2000 / mPreview.getHeight() - 1000);
-
-        // Submit focus area to camera
-
-        ArrayList<Camera.Area> focusAreas = new ArrayList<Camera.Area>();
-        focusAreas.add(new Camera.Area(focusArea, 1000));
-
-        List<String> focusModes = cameraParameters.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE))
-            cameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-
-        cameraParameters.setFocusAreas(focusAreas);
-        mCamera.setParameters(cameraParameters);
-
-        // Start the autofocus operation
-
-        mCamera.autoFocus(this);
     }
 
     @Override
@@ -164,6 +109,8 @@ public class TakePictureActivity extends Activity implements Camera.AutoFocusCal
             if (pictureFile == null){
                 return;
             }
+
+            // TODO Save squared http://stackoverflow.com/questions/20352408/square-image-using-customized-camera
 
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
