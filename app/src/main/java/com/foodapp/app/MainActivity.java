@@ -11,25 +11,23 @@ import android.support.v4.widget.DrawerLayout;
 import com.foodapp.app.fragments.MainFragment;
 
 
-public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainFragment.OnFragmentInteractionListener {
+public class MainActivity extends Activity implements
+        NavigationDrawerFragment.NavigationDrawerCallbacks,
+        MainFragment.OnFragmentInteractionListener {
 
+    private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
+    private static final String SELECTED_CATEGORY = "SELECTED_CATEGORY";
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
     private FragmentManager mFragmentManager;
     private MainFragment mMainFragment;
-
     private int mSelectedCategory;
-
-    private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private static final String SELECTED_CATEGORY = "SELECTED_CATEGORY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

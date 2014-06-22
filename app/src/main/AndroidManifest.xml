@@ -34,7 +34,11 @@
             android:label="@string/title_activity_take_picture"
             android:screenOrientation="portrait">
         </activity>
-            
+
+        <activity
+            android:name="com.foodapp.app.ShowPictureActivity"
+            android:screenOrientation="portrait"></activity>
+
 
     </application>
 

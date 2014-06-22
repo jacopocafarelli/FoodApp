@@ -1,6 +1,9 @@
 package com.foodapp.app;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.foodapp.app.imageUtils.CameraPreview;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,11 +25,90 @@ import java.util.Date;
 
 public class TakePictureActivity extends Activity implements Camera.AutoFocusCallback {
 
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+
+            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
+            if (pictureFile == null) {
+                return;
+            }
+
+            // TODO Save squared http://stackoverflow.com/questions/20352408/square-image-using-customized-camera
+
+            try {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                int bitmapWidth = bitmap.getWidth();
+                Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapWidth);
+
+                ByteArrayOutputStream blob = new ByteArrayOutputStream();
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, blob);
+                byte[] bitmapData = blob.toByteArray();
+
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                fos.write(bitmapData);
+                fos.close();
+
+                Intent showPictureIntent = new Intent(TakePictureActivity.this, ShowPictureActivity.class);
+                showPictureIntent.putExtra("path", pictureFile.getPath());
+                startActivity(showPictureIntent);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    };
     private Camera mCamera;
     private CameraPreview mPreview;
-    public static final int MEDIA_TYPE_IMAGE = 1;
 
-    /** Called when the activity is first created. */
+    /**
+     * A safe way to get an instance of the Camera object.
+     */
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+        }
+        return c; // returns null if camera is unavailable
+    }
+
+    /**
+     * Create a File for saving an image
+     */
+    private static File getOutputMediaFile(int type) {
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "FoodTastic");
+        // This location works best if you want the created images to be shared between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d("FoodTastic", "failed to create directory");
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +141,7 @@ public class TakePictureActivity extends Activity implements Camera.AutoFocusCal
                 mCamera.startPreview();
                 mCamera.autoFocus(this);
 
-            }catch(Exception e){
+            } catch (Exception e) {
             }
         } else {
             // Create an instance of Camera
@@ -80,75 +163,10 @@ public class TakePictureActivity extends Activity implements Camera.AutoFocusCal
 
     private void releaseCamera() {
         // TODO Auto-generated method stub
-        if (mCamera != null){
+        if (mCamera != null) {
             mCamera.release();
             mCamera = null;
         }
-    }
-
-    /** A safe way to get an instance of the Camera object. */
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try {
-            c = Camera.open(); // attempt to get a Camera instance
-        }
-        catch (Exception e){
-            // Camera is not available (in use or does not exist)
-        }
-        return c; // returns null if camera is unavailable
-    }
-
-
-    private Camera.PictureCallback mPicture = new Camera.PictureCallback() {
-        @Override
-        public void onPictureTaken(byte[] data, Camera camera) {
-
-            File pictureFile = getOutputMediaFile(MEDIA_TYPE_IMAGE);
-            if (pictureFile == null){
-                return;
-            }
-
-            // TODO Save squared http://stackoverflow.com/questions/20352408/square-image-using-customized-camera
-
-            try {
-                FileOutputStream fos = new FileOutputStream(pictureFile);
-                fos.write(data);
-                fos.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    };
-
-
-    /** Create a File for saving an image */
-    private static File getOutputMediaFile(int type){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "FoodTastic");
-        // This location works best if you want the created images to be shared between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                Log.d("FoodTastic", "failed to create directory");
-                return null;
-            }
-        }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE){
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_"+ timeStamp + ".jpg");
-        } else {
-            return null;
-        }
-
-        return mediaFile;
     }
 
     @Override
