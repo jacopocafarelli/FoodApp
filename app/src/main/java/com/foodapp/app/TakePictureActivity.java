@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.foodapp.app.imageUtils.CameraPreview;
+import com.foodapp.app.utils.CameraPreview;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

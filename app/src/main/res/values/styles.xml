@@ -1,15 +1,12 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:actionBarStyle">@style/FTActionBar</item>
     </style>
 
     <!-- ActionBar styles -->
-    <style name="FTActionBar"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@drawable/ab_solid</item>
+    <style name="FTActionBar" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/bloody_mary</item>
     </style>
 
 </resources>
