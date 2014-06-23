@@ -2,17 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.foodapp.app">
 
-    <uses-sdk
-    android:minSdkVersion="14"
-    android:targetSdkVersion="18" />
+    <!-- TODO: remember to change flag IS_DEVELOPING in Constants before releasing -->
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-
     <uses-feature android:name="android.hardware.camera" />
-
 
     <application
         android:allowBackup="true"
@@ -31,14 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.foodapp.app.TakePictureActivity"
-            android:label="@string/title_activity_take_picture"
-            android:screenOrientation="portrait">
-        </activity>
-
         <activity
             android:name="com.foodapp.app.ShowPictureActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
 
     </application>

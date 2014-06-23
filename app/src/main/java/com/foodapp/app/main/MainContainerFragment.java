@@ -11,6 +11,9 @@ import android.widget.Button;
 
 import com.foodapp.app.R;
 import com.foodapp.app.common.OnBackPressedListener;
+import com.foodapp.app.main.listeners.OnTakePictureRequestedListener;
+
+import java.util.ArrayList;
 
 public class MainContainerFragment extends Fragment implements
         OnBackPressedListener,
@@ -26,6 +29,7 @@ public class MainContainerFragment extends Fragment implements
 
     private boolean mIsShowingCamera;
     private int mInitialButtonY = -1;
+    private ArrayList<OnTakePictureRequestedListener> mPictureRequestedListeners;
 
     public static MainContainerFragment newInstance() {
         MainContainerFragment fragment = new MainContainerFragment();
@@ -63,19 +67,17 @@ public class MainContainerFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_container, container, false);
 
+        mPictureRequestedListeners = new ArrayList<OnTakePictureRequestedListener>();
         mTakePictureButton = (Button) view.findViewById(R.id.btn_fragment_gallery_container);
-
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mIsShowingCamera) {
                     calculateButtonPosition();
-                    mIsShowingCamera = true;
                     showCameraFragment();
                 } else {
+                    notifyCameraListeners();
                     mIsShowingCamera = false;
-                    getChildFragmentManager().popBackStackImmediate();
-                    mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mInitialButtonY);
                 }
             }
         });
@@ -129,6 +131,27 @@ public class MainContainerFragment extends Fragment implements
                 .add(R.id.fl_fragment_gallery_content, cameraFragment)
                 .addToBackStack("")
                 .commit();
+    }
+
+    private void notifyCameraListeners() {
+        for (int i = 0; i < mPictureRequestedListeners.size(); i++) {
+            mPictureRequestedListeners.get(i).onTakePictureRequested();
+        }
+    }
+
+    @Override
+    public void addTakePictureRequestedListener(OnTakePictureRequestedListener listener) {
+        mPictureRequestedListeners.add(listener);
+    }
+
+    @Override
+    public void removeTakePictureRequestedListener(OnTakePictureRequestedListener listener) {
+        mPictureRequestedListeners.remove(listener);
+    }
+
+    @Override
+    public void notifyCameraIsShowing() {
+        mIsShowingCamera = true;
         mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(1000);
     }
 

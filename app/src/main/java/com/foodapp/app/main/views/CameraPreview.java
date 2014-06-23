@@ -1,4 +1,4 @@
-package com.foodapp.app.utils;
+package com.foodapp.app.main.views;
 
 /**
  * Created by Jacopo on 08/06/2014.
@@ -6,9 +6,10 @@ package com.foodapp.app.utils;
 
 import android.content.Context;
 import android.hardware.Camera;
-import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+
+import com.foodapp.app.utils.LogUtils;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // supported preview sizes
         mSupportedPreviewSizes = mCamera.getParameters().getSupportedPreviewSizes();
         for (Camera.Size str : mSupportedPreviewSizes)
-            Log.e(TAG, str.width + "/" + str.height);
+            LogUtils.logError(TAG + ": " + str.width + "/" + str.height);
 
         // Install a SurfaceHolder.Callback so we get notified when the
         // underlying surface is created and destroyed.
@@ -56,7 +57,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        Log.e(TAG, "surfaceChanged => w=" + w + ", h=" + h);
+        LogUtils.logError(TAG + ": surfaceChanged => w=" + w + ", h=" + h);
         // If your preview can change or rotate, take care of those events here.
         // Make sure to stop the preview before resizing or reformatting it.
         if (mHolder.getSurface() == null) {
@@ -88,7 +89,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mCamera.startPreview();
 
         } catch (Exception e) {
-            Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+            LogUtils.logDebug(TAG + ": Error starting camera preview: " + e.getMessage());
         }
     }
 
@@ -147,6 +148,5 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
         return optimalSize;
     }
-
 }
 
