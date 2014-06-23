@@ -1,4 +1,4 @@
-package com.foodapp.app.main.views;
+package com.foodapp.app.sections.main.views;
 
 /**
  * Created by Jacopo on 08/06/2014.

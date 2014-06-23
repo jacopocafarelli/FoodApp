@@ -1,4 +1,4 @@
-package com.foodapp.app.main;
+package com.foodapp.app.sections.main;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import com.foodapp.app.R;
 import com.foodapp.app.common.OnBackPressedListener;
-import com.foodapp.app.main.listeners.OnTakePictureRequestedListener;
+import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
 
 import java.util.ArrayList;
 

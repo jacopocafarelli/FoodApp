@@ -1,4 +1,4 @@
-package com.foodapp.app.main;
+package com.foodapp.app.sections.main;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 
 import com.foodapp.app.common.OnBackPressedListener;
-import com.foodapp.app.main.MainContainerFragment;
+import com.foodapp.app.sections.main.MainContainerFragment;
 
 public class MainActivity extends FragmentActivity implements
         MainContainerFragment.FragmentContainer,

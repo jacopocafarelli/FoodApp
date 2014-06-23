@@ -1,4 +1,4 @@
-package com.foodapp.app.main;
+package com.foodapp.app.sections.main;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import android.widget.FrameLayout;
 
 import com.foodapp.app.R;
 import com.foodapp.app.ShowPictureActivity;
-import com.foodapp.app.main.listeners.OnTakePictureRequestedListener;
-import com.foodapp.app.main.views.CameraPreview;
+import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
+import com.foodapp.app.sections.main.views.CameraPreview;
 import com.foodapp.app.utils.BitmapUtils;
 import com.foodapp.app.utils.FileUtils;
 
