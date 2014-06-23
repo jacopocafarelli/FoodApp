@@ -17,7 +17,7 @@ public class BitmapUtils {
         Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmapWidth, bitmapWidth);
 
         ByteArrayOutputStream blob = new ByteArrayOutputStream();
-        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 90, blob);
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 100, blob);
         byte[] bitmapData = blob.toByteArray();
 
         try {

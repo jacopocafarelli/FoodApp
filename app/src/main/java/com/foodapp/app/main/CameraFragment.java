@@ -118,7 +118,6 @@ public class CameraFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
         mCamera = null;
-        mPreview = null;
         mPicture = null;
         mCameraPreviewContainer = null;
     }
@@ -134,11 +133,12 @@ public class CameraFragment extends Fragment implements
             mCamera.release();
             mCamera = null;
         }
+        mCameraPreviewContainer.removeView(mPreview);
+        mPreview = null;
     }
 
     @Override
     public void onAutoFocus(boolean b, Camera camera) {
-
     }
 
     @Override

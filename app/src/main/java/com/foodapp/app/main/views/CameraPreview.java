@@ -75,19 +75,17 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // set preview size and make any resize, rotate or reformatting changes here
         // start preview with new settings
         try {
-
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            parameters.set("orientation", "portrait");
+            parameters.set("orientation", Camera.Parameters.SCENE_MODE_PORTRAIT);
             parameters.setRotation(90);
-            parameters.setFlashMode("auto");
-            parameters.setFocusMode("continuous-picture");
+            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_AUTO);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
 
             mCamera.setParameters(parameters);
             mCamera.setDisplayOrientation(90);
             mCamera.setPreviewDisplay(mHolder);
             mCamera.startPreview();
-
         } catch (Exception e) {
             LogUtils.logDebug(TAG + ": Error starting camera preview: " + e.getMessage());
         }
