@@ -1,19 +1,18 @@
 package com.foodapp.app;
 
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 
 import com.foodapp.app.common.OnBackPressedListener;
 import com.foodapp.app.sections.main.MainContainerFragment;
 import com.foodapp.app.utils.ToastUtils;
 
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends Activity implements
         MainContainerFragment.FragmentContainer,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 //        , MainFragment.OnFragmentInteractionListener
@@ -35,11 +34,11 @@ public class MainActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFragmentManager = getFragmentManager();
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-        mFragmentManager = getSupportFragmentManager();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -53,7 +52,7 @@ public class MainActivity extends FragmentActivity implements
     }
 
     private void handleFragmentVisibility(Bundle savedInstanceState) {
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        android.app.FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         if (savedInstanceState == null) {
             mGalleryFragment = MainContainerFragment.newInstance();
             fragmentTransaction.add(R.id.container, mGalleryFragment, GALLERY_FRAGMENT_TAG).commit();
@@ -64,7 +63,7 @@ public class MainActivity extends FragmentActivity implements
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.container);
+        Fragment fragment = getFragmentManager().findFragmentById(R.id.container);
         if (fragment instanceof OnBackPressedListener && ((OnBackPressedListener) fragment).onBackPressed()) {
             return;
         } else {
