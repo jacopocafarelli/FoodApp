@@ -51,7 +51,7 @@ public class MainActivity extends BaseNavigationActivity implements
                     calculateButtonPosition();
                     showCameraFragment();
                 } else {
-                    notifyCameraListeners();
+                    notifyCameraListener();
                     mIsShowingCamera = false;
                 }
             }
@@ -140,7 +140,7 @@ public class MainActivity extends BaseNavigationActivity implements
                 .commit();
     }
 
-    private void notifyCameraListeners() {
+    private void notifyCameraListener() {
         if (mPictureRequestedListener != null) {
             mPictureRequestedListener.onTakePictureRequested();
         }
