@@ -2,6 +2,7 @@ package com.foodapp.app;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.foodapp.app.common.OnBackPressedListener;
 import com.foodapp.app.sections.main.MainContainerFragment;
+import com.foodapp.app.utils.ToastUtils;
 
 public class MainActivity extends FragmentActivity implements
         MainContainerFragment.FragmentContainer,
@@ -17,12 +19,16 @@ public class MainActivity extends FragmentActivity implements
 //        , MainFragment.OnFragmentInteractionListener
 
     private static final String GALLERY_FRAGMENT_TAG = "GALLERY_FRAGMENT_TAG";
+    private static final int DOUBLE_BACK_PRESSED_GAP_MS = 3000;
     //    private static final String SELECTED_CATEGORY = "SELECTED_CATEGORY";
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+
     private CharSequence mTitle;
+    private boolean mFirstBackPressed = false;
+    private int mSelectedCategory;
+
+    private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager mFragmentManager;
     private MainContainerFragment mGalleryFragment;
-    private int mSelectedCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,11 @@ public class MainActivity extends FragmentActivity implements
         handleFragmentVisibility(savedInstanceState);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        outState.putInt(SELECTED_CATEGORY, mSelectedCategory);
+    }
 
     private void handleFragmentVisibility(Bundle savedInstanceState) {
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
@@ -57,8 +68,24 @@ public class MainActivity extends FragmentActivity implements
         if (fragment instanceof OnBackPressedListener && ((OnBackPressedListener) fragment).onBackPressed()) {
             return;
         } else {
-            super.onBackPressed();
+            if (mFirstBackPressed) {
+                super.onBackPressed();
+            } else {
+                handleDoubleBackPressed();
+            }
         }
+    }
+
+    private void handleDoubleBackPressed() {
+        ToastUtils.showToastShort(this, getString(R.string.toast_exit_application));
+        mFirstBackPressed = true;
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                mFirstBackPressed = false;
+            }
+        }, DOUBLE_BACK_PRESSED_GAP_MS);
     }
 
     @Override
@@ -81,12 +108,6 @@ public class MainActivity extends FragmentActivity implements
                 mTitle = getString(R.string.title_section3);
                 break;
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putInt(SELECTED_CATEGORY, mSelectedCategory);
     }
 
     public void restoreActionBar() {
