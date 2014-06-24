@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +28,7 @@ public class MainActivity extends Activity implements
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private FragmentManager mFragmentManager;
-    private MainContainerFragment mGalleryFragment;
+    private MainContainerFragment mMainContainerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class MainActivity extends Activity implements
         setContentView(R.layout.activity_main);
 
         mFragmentManager = getFragmentManager();
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) mFragmentManager.findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -52,12 +53,12 @@ public class MainActivity extends Activity implements
     }
 
     private void handleFragmentVisibility(Bundle savedInstanceState) {
-        android.app.FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         if (savedInstanceState == null) {
-            mGalleryFragment = MainContainerFragment.newInstance();
-            fragmentTransaction.add(R.id.container, mGalleryFragment, GALLERY_FRAGMENT_TAG).commit();
+            mMainContainerFragment = MainContainerFragment.newInstance();
+            fragmentTransaction.add(R.id.container, mMainContainerFragment, GALLERY_FRAGMENT_TAG).commit();
         } else {
-            mGalleryFragment = (MainContainerFragment) mFragmentManager.findFragmentByTag(GALLERY_FRAGMENT_TAG);
+            mMainContainerFragment = (MainContainerFragment) mFragmentManager.findFragmentByTag(GALLERY_FRAGMENT_TAG);
         }
     }
 
