@@ -45,4 +45,53 @@
         android:textSize="18sp"
         custom:fontFamily="@string/font_family_roboto"
         custom:fontStyle="@string/font_style_thin" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_screen_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_screen_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_status_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_action_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_navigation_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_phone_or_tablet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
 </LinearLayout>
