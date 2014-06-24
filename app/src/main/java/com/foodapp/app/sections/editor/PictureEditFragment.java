@@ -24,9 +24,8 @@
 //import android.widget.RelativeLayout;
 //
 //import com.foodapp.app.R;
-//import com.foodapp.app.TakePictureActivity;
-//import com.foodapp.app.imageUtils.GLToolbox;
-//import com.foodapp.app.imageUtils.TextureRenderer;
+//import com.foodapp.app.sections.editor.utils.GLToolbox;
+//import com.foodapp.app.sections.editor.utils.TextureRenderer;
 //
 //import javax.microedition.khronos.egl.EGLConfig;
 //import javax.microedition.khronos.opengles.GL10;

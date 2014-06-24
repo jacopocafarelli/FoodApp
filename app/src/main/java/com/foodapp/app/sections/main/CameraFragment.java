@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.foodapp.app.R;
-import com.foodapp.app.ShowPictureActivity;
+import com.foodapp.app.sections.editor.ShowPictureActivity;
 import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
 import com.foodapp.app.sections.main.views.CameraPreview;
 import com.foodapp.app.utils.BitmapUtils;

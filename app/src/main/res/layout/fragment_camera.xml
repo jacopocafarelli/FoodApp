@@ -6,8 +6,8 @@
 
     <FrameLayout
         android:id="@+id/fl_fragment_camera_preview_container"
-        android:layout_width="@dimen/camera_preview_size"
-        android:layout_height="@dimen/camera_preview_size"
+        android:layout_width="@dimen/camera_preview_width_height"
+        android:layout_height="@dimen/camera_preview_width_height"
         android:layout_centerInParent="true"
         android:layout_gravity="center" />
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.foodapp.app.utils;
+package com.foodapp.app.sections.editor.utils;
 
 import android.opengl.GLES20;
 

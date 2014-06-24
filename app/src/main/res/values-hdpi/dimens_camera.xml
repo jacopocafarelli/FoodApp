@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="camera_preview_width_height">350dp</dimen>
+
+</resources>

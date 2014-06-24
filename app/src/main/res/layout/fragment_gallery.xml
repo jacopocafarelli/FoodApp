@@ -6,6 +6,13 @@
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QUESTI SONO ALCUNI TEST PER I FONT"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <com.foodapp.app.views.TypefaceTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,11 +53,18 @@
         custom:fontFamily="@string/font_family_roboto"
         custom:fontStyle="@string/font_style_thin" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="QUESTI SONO ALCUNI TEST PER LE MISURAZIONI"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <com.foodapp.app.views.TypefaceTextView
         android:id="@+id/tv_screen_width"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:textSize="18sp"
         custom:fontFamily="@string/font_family_roboto"
         custom:fontStyle="@string/font_style_light" />

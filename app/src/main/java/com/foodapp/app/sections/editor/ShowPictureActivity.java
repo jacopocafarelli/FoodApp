@@ -1,10 +1,12 @@
-package com.foodapp.app;
+package com.foodapp.app.sections.editor;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import com.foodapp.app.R;
 
 import java.io.File;
 
