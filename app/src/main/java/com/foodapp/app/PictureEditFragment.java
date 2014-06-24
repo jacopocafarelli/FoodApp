@@ -83,7 +83,7 @@
 //        }
 //
 //
-//        View view = (RelativeLayout) inflater.inflate(R.layout.fragment_main, container, false);
+//        View view = (RelativeLayout) inflater.inflate(R.layout.fragment_picture_edit, container, false);
 //
 //        /**
 //         * Initialise the renderer and tell it to only render when

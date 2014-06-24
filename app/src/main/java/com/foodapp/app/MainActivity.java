@@ -35,6 +35,8 @@ public class MainActivity extends FragmentActivity implements
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
         mFragmentManager = getSupportFragmentManager();
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
         handleFragmentVisibility(savedInstanceState);
     }
 
