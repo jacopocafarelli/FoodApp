@@ -1,11 +1,11 @@
 package com.foodapp.app;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 
-public class BaseNavigationActivity extends Activity implements
+public class BaseNavigationActivity extends FragmentActivity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private NavigationDrawerFragment mNavigationDrawerFragment;

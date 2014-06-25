@@ -1,10 +1,10 @@
 package com.foodapp.app.sections.main;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,26 +85,13 @@ public class CameraFragment extends Fragment implements
 
     @Override
     public void onResume() {
-        mFragmentContainer.addTakePictureRequestedListener(this);
-        if (mCamera != null) {
-            try {
-                mCamera.stopPreview();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                mCamera.startPreview();
-                mCamera.autoFocus(this);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            mCamera = getCameraInstance();
-            mPreview = new CameraPreview(getActivity(), mCamera);
-            mCameraPreviewContainer.addView(mPreview);
-        }
-        mFragmentContainer.notifyCameraIsShowing();
         super.onResume();
+        mCamera = getCameraInstance();
+        mPreview = new CameraPreview(getActivity(), mCamera);
+        mCameraPreviewContainer.addView(mPreview);
+
+        mFragmentContainer.addTakePictureRequestedListener(this);
+        mFragmentContainer.notifyCameraIsShowing();
     }
 
     @Override

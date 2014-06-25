@@ -1,7 +1,7 @@
 package com.foodapp.app.sections.main.views;
 
 /**
- * Created by Jacopo on 08/06/2014.
+ * Created by Jacopo.
  */
 
 import android.content.Context;
@@ -13,9 +13,6 @@ import com.foodapp.app.utils.LogUtils;
 
 import java.util.List;
 
-/**
- * A basic Camera preview class
- */
 public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback {
 
     private static final String TAG = "CameraPreview";

@@ -1,10 +1,10 @@
 package com.foodapp.app;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,14 +40,13 @@ public class MainActivity extends BaseNavigationActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mFragmentManager = getFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
         setupDrawer();
         mTakePictureButton = (Button) findViewById(R.id.btn_activity_main);
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mIsShowingCamera) {
-                    enableNavigationDrawer(false);
                     calculateButtonPosition();
                     showCameraFragment();
                 } else {
@@ -133,8 +132,7 @@ public class MainActivity extends BaseNavigationActivity implements
     private void showCameraFragment() {
         Fragment cameraFragment = CameraFragment.newInstance();
         mFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,
-                        android.R.animator.fade_in, android.R.animator.fade_out)
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
                 .add(R.id.container, cameraFragment)
                 .addToBackStack(CAMERA_FRAGMENT_TAG)
                 .commit();
@@ -158,6 +156,7 @@ public class MainActivity extends BaseNavigationActivity implements
 
     @Override
     public void notifyCameraIsShowing() {
+        enableNavigationDrawer(false);
         mIsShowingCamera = true;
         mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(1000);
     }
