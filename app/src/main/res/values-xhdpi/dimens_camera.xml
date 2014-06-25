@@ -1,5 +1,7 @@
 <resources>
 
-    <dimen name="camera_preview_width_height">350dp</dimen>
+    <dimen name="camera_preview_margin_top_bottom">10dp</dimen>
+    <dimen name="camera_loading_progress_margin">10dp</dimen>
+    <dimen name="camera_loading_progress_width_height">50dp</dimen>
 
 </resources>

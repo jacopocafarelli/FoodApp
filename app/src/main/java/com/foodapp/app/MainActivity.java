@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.foodapp.app.sections.main.CameraFragment;
 import com.foodapp.app.sections.main.GalleryFragment;
 import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
+import com.foodapp.app.utils.DisplayMetricsUtils;
 import com.foodapp.app.utils.ToastUtils;
 
 public class MainActivity extends BaseNavigationActivity implements
@@ -19,16 +20,18 @@ public class MainActivity extends BaseNavigationActivity implements
         CameraFragment.FragmentContainer {
 //        , MainFragment.OnFragmentInteractionListener
 
-    private static final int ANIMATION_DURATION_MS = 2000;
+    private static final int ANIMATION_DURATION_MS = 1000;
+    private static final int DOUBLE_BACK_PRESSED_GAP_MS = 3000;
     private static final String SAVED_INSTANCE_CAMERA_IS_SHOWING = "SAVED_INSTANCE_CAMERA_IS_SHOWING";
-    private static final String SAVED_INSTANCE_INITIAL_BUTTON_POSITION = "SAVED_INSTANCE_INITIAL_BUTTON_POSITION";
+    private static final String SAVED_INSTANCE_BUTTON_GALLERY_POSITION = "SAVED_INSTANCE_BUTTON_GALLERY_POSITION";
+    private static final String SAVED_INSTANCE_BUTTON_CAMERA_POSITION = "SAVED_INSTANCE_BUTTON_CAMERA_POSITION";
     private static final String GALLERY_FRAGMENT_TAG = "GALLERY_FRAGMENT_TAG";
     private static final String CAMERA_FRAGMENT_TAG = "CAMERA_FRAGMENT_TAG";
-    private static final int DOUBLE_BACK_PRESSED_GAP_MS = 3000;
 
     private boolean mFirstBackPressed = false;
     private boolean mIsShowingCamera;
-    private int mInitialButtonY = -1;
+    private int mGalleryButtonPositionY = -1;
+    private int mCameraButtonPositionY = -1;
     private OnTakePictureRequestedListener mPictureRequestedListener;
 
     private FragmentManager mFragmentManager;
@@ -47,7 +50,8 @@ public class MainActivity extends BaseNavigationActivity implements
             @Override
             public void onClick(View view) {
                 if (!mIsShowingCamera) {
-                    calculateButtonPosition();
+                    calculateButtonGalleryPosition();
+                    calculateButtonCameraPosition();
                     showCameraFragment();
                 } else {
                     notifyCameraListener();
@@ -77,7 +81,8 @@ public class MainActivity extends BaseNavigationActivity implements
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SAVED_INSTANCE_CAMERA_IS_SHOWING, mIsShowingCamera);
-        outState.putInt(SAVED_INSTANCE_INITIAL_BUTTON_POSITION, mInitialButtonY);
+        outState.putInt(SAVED_INSTANCE_BUTTON_GALLERY_POSITION, mGalleryButtonPositionY);
+        outState.putInt(SAVED_INSTANCE_BUTTON_CAMERA_POSITION, mCameraButtonPositionY);
     }
 
     private void handleFragmentVisibility(Bundle savedInstanceState) {
@@ -87,7 +92,8 @@ public class MainActivity extends BaseNavigationActivity implements
             fragmentTransaction.add(R.id.container, mGalleryFragment, GALLERY_FRAGMENT_TAG).commit();
         } else {
             mIsShowingCamera = savedInstanceState.getBoolean(SAVED_INSTANCE_CAMERA_IS_SHOWING);
-            mInitialButtonY = savedInstanceState.getInt(SAVED_INSTANCE_INITIAL_BUTTON_POSITION);
+            mGalleryButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_GALLERY_POSITION);
+            mCameraButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_CAMERA_POSITION);
             mGalleryFragment = (GalleryFragment) mFragmentManager.findFragmentByTag(GALLERY_FRAGMENT_TAG);
         }
     }
@@ -97,7 +103,7 @@ public class MainActivity extends BaseNavigationActivity implements
         if (mIsShowingCamera) {
             enableNavigationDrawer(true);
             mIsShowingCamera = false;
-            mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mInitialButtonY);
+            mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mGalleryButtonPositionY);
             mFragmentManager.popBackStackImmediate();
         } else {
             if (mFirstBackPressed) {
@@ -120,12 +126,23 @@ public class MainActivity extends BaseNavigationActivity implements
         }, DOUBLE_BACK_PRESSED_GAP_MS);
     }
 
-    private void calculateButtonPosition() {
-        if (mInitialButtonY == -1) {
+    private void calculateButtonGalleryPosition() {
+        if (mGalleryButtonPositionY == -1) {
             int buttonCoords[] = new int[2];
             mTakePictureButton.getLocationOnScreen(buttonCoords);
             int buttonHeight = mTakePictureButton.getHeight();
-            mInitialButtonY = buttonCoords[1] - (buttonHeight + buttonHeight / 2);
+            mGalleryButtonPositionY = buttonCoords[1] - (buttonHeight + buttonHeight / 2);
+        }
+    }
+
+    private void calculateButtonCameraPosition() {
+        if (mCameraButtonPositionY == -1) {
+            int statusBarHeight = DisplayMetricsUtils.getStatusBarHeight(this);
+            int actionBarHeight = DisplayMetricsUtils.getActionBarHeight(this);
+            int cameraMargins = getResources().getDimensionPixelSize(R.dimen.camera_preview_margin_top_bottom) * 2;
+            int cameraPreviewHeight = DisplayMetricsUtils.getDisplayWidth(this) + cameraMargins;
+            int cameraButtonHeight = mTakePictureButton.getHeight();
+            mCameraButtonPositionY = (statusBarHeight + actionBarHeight + cameraPreviewHeight) - (cameraButtonHeight / 2);
         }
     }
 
@@ -158,6 +175,6 @@ public class MainActivity extends BaseNavigationActivity implements
     public void notifyCameraIsShowing() {
         enableNavigationDrawer(false);
         mIsShowingCamera = true;
-        mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(1000);
+        mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mCameraButtonPositionY);
     }
 }

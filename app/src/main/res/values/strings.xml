@@ -15,4 +15,7 @@
     <!-- Main activity -->
     <string name="toast_exit_application">Press again to close the application</string>
 
+    <!-- Camera -->
+    <string name="camera_loading">Loading camera</string>
+
 </resources>
