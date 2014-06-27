@@ -3,19 +3,29 @@
 
     <string name="app_name">FoodTastic</string>
 
+    <!-- Generics -->
+    <string name="email_message_feature_request">Hey team! I would like you to suggest this feature:</string>
+    <string name="email_message_bug_report">Hey team! I found this bug on my phone%s:</string>
+    <string name="toast_exit_application">Press again to close the application</string>
+
     <!-- Navigation Drawer -->
-    <string name="title_section1">Category 1</string>
-    <string name="title_section2">Category 2</string>
-    <string name="title_section3">Category 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_pictures">PICTURES</string>
+    <string name="navigation_drawer_my_gallery">My gallery</string>
+    <string name="navigation_drawer_settings">SETTINGS</string>
+    <string name="navigation_drawer_contact_us">CONTACT US</string>
+    <string name="navigation_drawer_feature_request">FEATURE REQUEST</string>
+    <string name="navigation_drawer_report_bug">BUG REPORT</string>
+
+    <!-- Gallery -->
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
 
-    <!-- Main activity -->
-    <string name="toast_exit_application">Press again to close the application</string>
-
     <!-- Camera -->
     <string name="camera_loading">Loading camera</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
 
 </resources>

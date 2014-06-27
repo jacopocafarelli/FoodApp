@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Black & White -->
     <color name="snowhite">#FFFFFF</color>
-    <color name="number8">#000000</color>
+    <color name="ivory">#FDFDFD</color>
     <color name="greywolf">#E9E9E9</color>
-    <color name="aluminium">#AEAEAE</color>
+    <color name="aluminium">#C7C7C7</color>
     <color name="carbon">#3D3D3C</color>
+    <color name="number8">#000000</color>
+
+    <!-- Colors -->
     <color name="bloody_mary">#A00000</color>
 
     <color name="red_semitransparent">#DDA00000</color>
