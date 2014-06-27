@@ -17,6 +17,11 @@
     <dimen name="navigation_drawer_item_text_size">24sp</dimen>
     <dimen name="navigation_drawer_item_padding_top_bottom">15dp</dimen>
 
+    <!-- SubItems -->
+    <dimen name="navigation_drawer_subitem_text_size">18sp</dimen>
+    <dimen name="navigation_drawer_subitem_padding_top_bottom">10sp</dimen>
+    <dimen name="navigation_drawer_subitem_margin_right">10sp</dimen>
+
     <!-- Settings items -->
     <dimen name="navigation_drawer_settings_icon_width_height">25dp</dimen>
     <dimen name="navigation_drawer_settings_icon_margin">15dp</dimen>

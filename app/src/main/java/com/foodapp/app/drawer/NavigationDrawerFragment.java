@@ -19,9 +19,9 @@ import android.widget.LinearLayout;
 
 import com.foodapp.app.R;
 import com.foodapp.app.drawer.operations.Executable;
-import com.foodapp.app.drawer.operations.FeedbackExecutable;
-import com.foodapp.app.drawer.operations.GalleryExecutable;
-import com.foodapp.app.drawer.operations.SettingsExecutable;
+import com.foodapp.app.drawer.operations.FeedbackOperation;
+import com.foodapp.app.drawer.operations.GalleryOperation;
+import com.foodapp.app.drawer.operations.SettingsOperation;
 import com.foodapp.app.sections.main.enums.DishType;
 
 /**
@@ -89,6 +89,7 @@ public class NavigationDrawerFragment extends Fragment {
         View navigationDrawer = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 
         setUpGalleryButton(navigationDrawer);
+        setUpGalleryCategories(navigationDrawer);
         setUpSettingsButton(navigationDrawer);
         setUpContactButtons(navigationDrawer);
 
@@ -123,10 +124,29 @@ public class NavigationDrawerFragment extends Fragment {
         galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mExecutable = new GalleryExecutable(mNavigationDrawerContainer, DishType.NONE);
+                mExecutable = new GalleryOperation(mNavigationDrawerContainer, DishType.NONE);
                 closeDrawer();
             }
         });
+    }
+
+    private void setUpGalleryCategories(View drawerLayout) {
+        LinearLayout galleryCategoriesContainer = (LinearLayout) drawerLayout.findViewById(R.id.ll_fragment_navigation_drawer_gallery_categories);
+        // TODO use a for instead
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+        addGalleryCategory(galleryCategoriesContainer);
+    }
+
+    private void addGalleryCategory(LinearLayout container) {
+        View categoryLayout = LayoutInflater.from(getActivity()).inflate(R.layout.item_navigation_drawer_dish_categories, null);
+        container.addView(categoryLayout);
     }
 
     private void setUpSettingsButton(View drawerLayout) {
@@ -134,7 +154,7 @@ public class NavigationDrawerFragment extends Fragment {
         settingsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mExecutable = new SettingsExecutable(mNavigationDrawerContainer);
+                mExecutable = new SettingsOperation(mNavigationDrawerContainer);
                 closeDrawer();
             }
         });
@@ -148,7 +168,7 @@ public class NavigationDrawerFragment extends Fragment {
         contactUsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mExecutable = new FeedbackExecutable(mNavigationDrawerContainer, appName, "");
+                mExecutable = new FeedbackOperation(mNavigationDrawerContainer, appName, "");
                 closeDrawer();
             }
         });
@@ -156,7 +176,7 @@ public class NavigationDrawerFragment extends Fragment {
         featureRequestLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mExecutable = new FeedbackExecutable(mNavigationDrawerContainer, appName + EMAIL_FEATURE_REQUEST_SUBJECT, featureRequestMessage);
+                mExecutable = new FeedbackOperation(mNavigationDrawerContainer, appName + EMAIL_FEATURE_REQUEST_SUBJECT, featureRequestMessage);
                 closeDrawer();
             }
         });
@@ -164,7 +184,7 @@ public class NavigationDrawerFragment extends Fragment {
         bugReportLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mExecutable = new FeedbackExecutable(mNavigationDrawerContainer, appName + EMAIL_BUG_REPORT_SUBJECT, bugReportMessage);
+                mExecutable = new FeedbackOperation(mNavigationDrawerContainer, appName + EMAIL_BUG_REPORT_SUBJECT, bugReportMessage);
                 closeDrawer();
             }
         });

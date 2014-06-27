@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:background="@color/ivory"
+            android:background="@drawable/bg_nav_drawer_item_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/navigation_drawer_item_padding_top_bottom"
@@ -81,7 +81,21 @@
                 android:textSize="@dimen/navigation_drawer_item_text_size"
                 custom:fontFamily="@string/font_family_roboto"
                 custom:fontStyle="@string/font_style_regular" />
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:background="@color/carbon" />
         </LinearLayout>
+
+        <!-- Pictures categories -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_gallery_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical"></LinearLayout>
 
         <View
             android:layout_width="match_parent"
@@ -93,6 +107,7 @@
             android:id="@+id/ll_fragment_navigation_drawer_settings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
@@ -124,6 +139,7 @@
             android:id="@+id/ll_fragment_navigation_drawer_contact_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
@@ -155,6 +171,7 @@
             android:id="@+id/ll_fragment_navigation_drawer_feature_request"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
@@ -186,6 +203,7 @@
             android:id="@+id/ll_fragment_navigation_drawer_bug_report"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
