@@ -31,6 +31,10 @@
             android:name=".sections.editor.ShowPictureActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".sections.settings.SettingsActivity"
+            android:screenOrientation="portrait" />
+
 
     </application>
 

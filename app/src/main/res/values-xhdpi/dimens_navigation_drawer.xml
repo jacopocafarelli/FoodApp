@@ -1,0 +1,31 @@
+<resources>
+
+    <!-- Generic -->
+    <dimen name="navigation_drawer_padding_left">15dp</dimen>
+    <dimen name="navigation_drawer_padding_right">10dp</dimen>
+    <dimen name="navigation_drawer_divider_height">1dp</dimen>
+
+    <!-- Titles -->
+    <dimen name="navigation_drawer_section_title_padding_top">10dp</dimen>
+    <dimen name="navigation_drawer_section_title_padding_bottom">2dp</dimen>
+    <dimen name="navigation_drawer_section_title_text_size">16sp</dimen>
+    <dimen name="navigation_drawer_section_badge_width_height">25dp</dimen>
+    <dimen name="navigation_drawer_section_badge_text_size">16sp</dimen>
+    <dimen name="navigation_drawer_section_badge_text_side_margins">5dp</dimen>
+
+    <!-- Items -->
+    <dimen name="navigation_drawer_item_text_size">24sp</dimen>
+    <dimen name="navigation_drawer_item_padding_top_bottom">15dp</dimen>
+
+    <!-- SubItems -->
+    <dimen name="navigation_drawer_subitem_text_size">18sp</dimen>
+    <dimen name="navigation_drawer_subitem_padding_top_bottom">10sp</dimen>
+    <dimen name="navigation_drawer_subitem_margin_right">10sp</dimen>
+
+    <!-- Settings items -->
+    <dimen name="navigation_drawer_settings_icon_width_height">25dp</dimen>
+    <dimen name="navigation_drawer_settings_icon_margin">15dp</dimen>
+    <dimen name="navigation_drawer_settings_text_size">16sp</dimen>
+    <dimen name="navigation_drawer_settings_padding_top_bottom">10dp</dimen>
+
+</resources>

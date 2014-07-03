@@ -1,5 +1,6 @@
 package com.foodapp.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -11,11 +12,14 @@ import android.widget.Button;
 
 import com.foodapp.app.sections.main.CameraFragment;
 import com.foodapp.app.sections.main.GalleryFragment;
+import com.foodapp.app.sections.main.enums.DishType;
+import com.foodapp.app.sections.main.listeners.OnFilterGalleryRequestedListener;
 import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
 import com.foodapp.app.utils.DisplayMetricsUtils;
 import com.foodapp.app.utils.ToastUtils;
 
 public class MainActivity extends BaseNavigationActivity implements
+        OnFilterGalleryRequestedListener,
         GalleryFragment.FragmentContainer,
         CameraFragment.FragmentContainer {
 //        , MainFragment.OnFragmentInteractionListener
@@ -42,6 +46,7 @@ public class MainActivity extends BaseNavigationActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
         mFragmentManager = getSupportFragmentManager();
         setupDrawer();
@@ -59,7 +64,26 @@ public class MainActivity extends BaseNavigationActivity implements
                 }
             }
         });
+
+        if (savedInstanceState != null) {
+            mIsShowingCamera = savedInstanceState.getBoolean(SAVED_INSTANCE_CAMERA_IS_SHOWING);
+            mGalleryButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_GALLERY_POSITION);
+            mCameraButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_CAMERA_POSITION);
+        }
+
         handleFragmentVisibility(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addGalleryRequestedListener(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        removeGalleryRequestedListener();
     }
 
     @Override
@@ -102,6 +126,7 @@ public class MainActivity extends BaseNavigationActivity implements
     public void onBackPressed() {
         if (mIsShowingCamera) {
             enableNavigationDrawer(true);
+            unlockDrawer();
             mIsShowingCamera = false;
             mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mGalleryButtonPositionY);
             mFragmentManager.popBackStackImmediate();
@@ -161,6 +186,13 @@ public class MainActivity extends BaseNavigationActivity implements
         }
     }
 
+    private void showFilteredGallery(DishType dishType) {
+        if (mIsShowingCamera) {
+            onBackPressed();
+        }
+        ToastUtils.showToastShort(this, "We should show filtered results here");
+    }
+
     @Override
     public void addTakePictureRequestedListener(OnTakePictureRequestedListener listener) {
         mPictureRequestedListener = listener;
@@ -173,8 +205,23 @@ public class MainActivity extends BaseNavigationActivity implements
 
     @Override
     public void notifyCameraIsShowing() {
+        lockDrawer();
         enableNavigationDrawer(false);
         mIsShowingCamera = true;
         mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mCameraButtonPositionY);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        String dishTypeString = intent.getExtras().getString(DishType.DISH_TYPE);
+        DishType dishType = DishType.valueOf(dishTypeString);
+        showFilteredGallery(dishType);
+    }
+
+    @Override
+    public void onFilterGalleryRequested(DishType dishType) {
+        showFilteredGallery(dishType);
     }
 }

@@ -1,10 +1,228 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#cccc"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    tools:context="com.foodtastic.app.NavigationDrawerFragment" />
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/greywolf"
+        android:orientation="vertical">
+
+        <!-- Pictures title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/ivory"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_section_title_padding_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingRight="@dimen/navigation_drawer_padding_right"
+            android:paddingTop="@dimen/navigation_drawer_section_title_padding_top">
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/navigation_drawer_pictures"
+                android:textSize="@dimen/navigation_drawer_section_title_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_bold" />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/navigation_drawer_section_badge_width_height"
+                android:background="@drawable/bg_nav_drawer_badge"
+                android:minWidth="@dimen/navigation_drawer_section_badge_width_height">
+
+                <com.foodapp.app.views.TypefaceTextView
+                    android:id="@+id/tv_fragment_navigation_drawer_pics_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/navigation_drawer_section_badge_text_side_margins"
+                    android:layout_marginRight="@dimen/navigation_drawer_section_badge_text_side_margins"
+                    android:text="10000"
+                    android:textColor="@color/greywolf"
+                    android:textSize="@dimen/navigation_drawer_section_badge_text_size"
+                    custom:fontFamily="@string/font_family_roboto"
+                    custom:fontStyle="@string/font_style_light" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_divider_height"
+            android:background="@color/carbon" />
+
+        <!-- Pictures my gallery -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_gallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/bg_nav_drawer_item_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_item_padding_top_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingRight="@dimen/navigation_drawer_padding_right"
+            android:paddingTop="@dimen/navigation_drawer_item_padding_top_bottom">
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/navigation_drawer_my_gallery"
+                android:textSize="@dimen/navigation_drawer_item_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_regular" />
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:background="@color/carbon" />
+        </LinearLayout>
+
+        <!-- Pictures categories -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_gallery_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:orientation="vertical"></LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_divider_height"
+            android:background="@color/carbon" />
+
+        <!-- Settings -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingTop="@dimen/navigation_drawer_settings_padding_top_bottom">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_marginRight="@dimen/navigation_drawer_settings_icon_margin"
+                android:background="@color/carbon" />
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_drawer_settings"
+                android:textSize="@dimen/navigation_drawer_settings_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_light" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_divider_height"
+            android:background="@color/aluminium" />
+
+        <!-- Contact us -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_contact_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingTop="@dimen/navigation_drawer_settings_padding_top_bottom">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_marginRight="@dimen/navigation_drawer_settings_icon_margin"
+                android:background="@color/carbon" />
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_drawer_contact_us"
+                android:textSize="@dimen/navigation_drawer_settings_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_light" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_divider_height"
+            android:background="@color/aluminium" />
+
+        <!-- Feature request -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_feature_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingTop="@dimen/navigation_drawer_settings_padding_top_bottom">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_marginRight="@dimen/navigation_drawer_settings_icon_margin"
+                android:background="@color/carbon" />
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_drawer_feature_request"
+                android:textSize="@dimen/navigation_drawer_settings_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_light" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/navigation_drawer_divider_height"
+            android:background="@color/aluminium" />
+
+        <!-- Bug report -->
+        <LinearLayout
+            android:id="@+id/ll_fragment_navigation_drawer_bug_report"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_nav_drawer_item_settings_selector"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/navigation_drawer_settings_padding_top_bottom"
+            android:paddingLeft="@dimen/navigation_drawer_padding_left"
+            android:paddingTop="@dimen/navigation_drawer_settings_padding_top_bottom">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_height="@dimen/navigation_drawer_settings_icon_width_height"
+                android:layout_marginRight="@dimen/navigation_drawer_settings_icon_margin"
+                android:background="@color/carbon" />
+
+            <com.foodapp.app.views.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/navigation_drawer_report_bug"
+                android:textSize="@dimen/navigation_drawer_settings_text_size"
+                custom:fontFamily="@string/font_family_roboto"
+                custom:fontStyle="@string/font_style_light" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
