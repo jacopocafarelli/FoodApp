@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/greywolf"
+    android:orientation="vertical">
+
+    <!-- Loading layout -->
+    <LinearLayout
+        android:id="@+id/ll_fragment_camera_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_width="@dimen/camera_loading_progress_width_height"
+            android:layout_height="@dimen/camera_loading_progress_width_height"
+            android:layout_marginBottom="@dimen/camera_loading_progress_margin"
+            android:indeterminate="true" />
+
+        <com.foodapp.app.views.TypefaceTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/camera_loading"
+            android:textSize="18sp"
+            custom:fontFamily="@string/font_family_roboto"
+            custom:fontStyle="@string/font_style_light" />
+    </LinearLayout>
+
+    <!-- Camera container -->
+    <FrameLayout
+        android:id="@+id/fl_fragment_camera_preview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Bottom container -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/carbon" />
+</LinearLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="font_family_roboto">Roboto</string>
+
+    <string name="font_style_regular">Regular</string>
+    <string name="font_style_light">Light</string>
+    <string name="font_style_thin">Thin</string>
+    <string name="font_style_bold">Bold</string>
+    <string name="font_style_italic">Italic</string>
+</resources>

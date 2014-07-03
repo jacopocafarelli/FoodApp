@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="snowhite">#FFFFFF</color>
+    <color name="number8">#000000</color>
+    <color name="greywolf">#E9E9E9</color>
+    <color name="aluminium">#AEAEAE</color>
+    <color name="carbon">#3D3D3C</color>
+    <color name="bloody_mary">#A00000</color>
+
     <color name="red_semitransparent">#DDA00000</color>
 </resources>

@@ -1,113 +1,180 @@
 package com.foodapp.app;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
-import com.foodapp.app.fragments.MainFragment;
+import com.foodapp.app.sections.main.CameraFragment;
+import com.foodapp.app.sections.main.GalleryFragment;
+import com.foodapp.app.sections.main.listeners.OnTakePictureRequestedListener;
+import com.foodapp.app.utils.DisplayMetricsUtils;
+import com.foodapp.app.utils.ToastUtils;
 
+public class MainActivity extends BaseNavigationActivity implements
+        GalleryFragment.FragmentContainer,
+        CameraFragment.FragmentContainer {
+//        , MainFragment.OnFragmentInteractionListener
 
-public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainFragment.OnFragmentInteractionListener {
+    private static final int ANIMATION_DURATION_MS = 1000;
+    private static final int DOUBLE_BACK_PRESSED_GAP_MS = 3000;
+    private static final String SAVED_INSTANCE_CAMERA_IS_SHOWING = "SAVED_INSTANCE_CAMERA_IS_SHOWING";
+    private static final String SAVED_INSTANCE_BUTTON_GALLERY_POSITION = "SAVED_INSTANCE_BUTTON_GALLERY_POSITION";
+    private static final String SAVED_INSTANCE_BUTTON_CAMERA_POSITION = "SAVED_INSTANCE_BUTTON_CAMERA_POSITION";
+    private static final String GALLERY_FRAGMENT_TAG = "GALLERY_FRAGMENT_TAG";
+    private static final String CAMERA_FRAGMENT_TAG = "CAMERA_FRAGMENT_TAG";
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
-    private CharSequence mTitle;
+    private boolean mFirstBackPressed = false;
+    private boolean mIsShowingCamera;
+    private int mGalleryButtonPositionY = -1;
+    private int mCameraButtonPositionY = -1;
+    private OnTakePictureRequestedListener mPictureRequestedListener;
 
     private FragmentManager mFragmentManager;
-    private MainFragment mMainFragment;
-
-    private int mSelectedCategory;
-
-    private static final String MAIN_FRAGMENT = "MAIN_FRAGMENT";
-    private static final String SELECTED_CATEGORY = "SELECTED_CATEGORY";
+    private GalleryFragment mGalleryFragment;
+    private Button mTakePictureButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-        mFragmentManager = getFragmentManager();
-
-        handleFragmentVisibility(savedInstanceState);
-
-    }
-
-
-    private void handleFragmentVisibility(Bundle savedInstance) {
-        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
-
-        // Get fragments by tag
-        mMainFragment = (MainFragment) mFragmentManager.findFragmentByTag(MAIN_FRAGMENT);
-
-        if (mMainFragment == null) {
-            mMainFragment = MainFragment.newInstance(0);
-
-            if (savedInstance == null) {
-                fragmentTransaction.add(R.id.container, mMainFragment, MAIN_FRAGMENT);
-                fragmentTransaction.show(mMainFragment);
-                fragmentTransaction.commit();
-            } else {
-                mSelectedCategory = savedInstance.getInt(SELECTED_CATEGORY);
-                mMainFragment.setCategoryAndRefresh(mSelectedCategory);
+        mFragmentManager = getSupportFragmentManager();
+        setupDrawer();
+        mTakePictureButton = (Button) findViewById(R.id.btn_activity_main);
+        mTakePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mIsShowingCamera) {
+                    calculateButtonGalleryPosition();
+                    calculateButtonCameraPosition();
+                    showCameraFragment();
+                } else {
+                    notifyCameraListener();
+                    mIsShowingCamera = false;
+                }
             }
-
-        }
-
+        });
+        handleFragmentVisibility(savedInstanceState);
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        mSelectedCategory = position;
-        // update the main content
-        if (mMainFragment != null)
-            mMainFragment.setCategoryAndRefresh(position);
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (mIsShowingCamera) {
+                    onBackPressed();
+                } else {
+                    openDrawer();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(SELECTED_CATEGORY, mSelectedCategory);
+        outState.putBoolean(SAVED_INSTANCE_CAMERA_IS_SHOWING, mIsShowingCamera);
+        outState.putInt(SAVED_INSTANCE_BUTTON_GALLERY_POSITION, mGalleryButtonPositionY);
+        outState.putInt(SAVED_INSTANCE_BUTTON_CAMERA_POSITION, mCameraButtonPositionY);
     }
 
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
+    private void handleFragmentVisibility(Bundle savedInstanceState) {
+        FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
+        if (savedInstanceState == null) {
+            mGalleryFragment = GalleryFragment.newInstance();
+            fragmentTransaction.add(R.id.container, mGalleryFragment, GALLERY_FRAGMENT_TAG).commit();
+        } else {
+            mIsShowingCamera = savedInstanceState.getBoolean(SAVED_INSTANCE_CAMERA_IS_SHOWING);
+            mGalleryButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_GALLERY_POSITION);
+            mCameraButtonPositionY = savedInstanceState.getInt(SAVED_INSTANCE_BUTTON_CAMERA_POSITION);
+            mGalleryFragment = (GalleryFragment) mFragmentManager.findFragmentByTag(GALLERY_FRAGMENT_TAG);
+        }
     }
-
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onBackPressed() {
+        if (mIsShowingCamera) {
+            enableNavigationDrawer(true);
+            mIsShowingCamera = false;
+            mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mGalleryButtonPositionY);
+            mFragmentManager.popBackStackImmediate();
+        } else {
+            if (mFirstBackPressed) {
+                super.onBackPressed();
+            } else {
+                handleDoubleBackPressed();
+            }
+        }
+    }
 
+    private void handleDoubleBackPressed() {
+        ToastUtils.showToastShort(this, getString(R.string.toast_exit_application));
+        mFirstBackPressed = true;
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                mFirstBackPressed = false;
+            }
+        }, DOUBLE_BACK_PRESSED_GAP_MS);
+    }
+
+    private void calculateButtonGalleryPosition() {
+        if (mGalleryButtonPositionY == -1) {
+            int buttonCoords[] = new int[2];
+            mTakePictureButton.getLocationOnScreen(buttonCoords);
+            int buttonHeight = mTakePictureButton.getHeight();
+            mGalleryButtonPositionY = buttonCoords[1] - (buttonHeight + buttonHeight / 2);
+        }
+    }
+
+    private void calculateButtonCameraPosition() {
+        if (mCameraButtonPositionY == -1) {
+            int statusBarHeight = DisplayMetricsUtils.getStatusBarHeight(this);
+            int actionBarHeight = DisplayMetricsUtils.getActionBarHeight(this);
+            int cameraMargins = getResources().getDimensionPixelSize(R.dimen.camera_preview_margin_top_bottom) * 2;
+            int cameraPreviewHeight = DisplayMetricsUtils.getDisplayWidth(this) + cameraMargins;
+            int cameraButtonHeight = mTakePictureButton.getHeight();
+            mCameraButtonPositionY = (statusBarHeight + actionBarHeight + cameraPreviewHeight) - (cameraButtonHeight / 2);
+        }
+    }
+
+    private void showCameraFragment() {
+        Fragment cameraFragment = CameraFragment.newInstance();
+        mFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out)
+                .add(R.id.container, cameraFragment)
+                .addToBackStack(CAMERA_FRAGMENT_TAG)
+                .commit();
+    }
+
+    private void notifyCameraListener() {
+        if (mPictureRequestedListener != null) {
+            mPictureRequestedListener.onTakePictureRequested();
+        }
+    }
+
+    @Override
+    public void addTakePictureRequestedListener(OnTakePictureRequestedListener listener) {
+        mPictureRequestedListener = listener;
+    }
+
+    @Override
+    public void removeTakePictureRequestedListener(OnTakePictureRequestedListener listener) {
+        mPictureRequestedListener = null;
+    }
+
+    @Override
+    public void notifyCameraIsShowing() {
+        enableNavigationDrawer(false);
+        mIsShowingCamera = true;
+        mTakePictureButton.animate().setDuration(ANIMATION_DURATION_MS).y(mCameraButtonPositionY);
     }
 }

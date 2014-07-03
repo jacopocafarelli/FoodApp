@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/greywolf"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QUESTI SONO ALCUNI TEST PER I FONT"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Questo è roboto BOLD"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_bold" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Questo è roboto LIGHT"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Questo è roboto REGULAR"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_regular" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Questo è roboto ITALIC"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_italic" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Questo è roboto THIN"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_thin" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="QUESTI SONO ALCUNI TEST PER LE MISURAZIONI"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_screen_width"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_screen_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_status_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_action_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_navigation_bar_height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+
+    <com.foodapp.app.views.TypefaceTextView
+        android:id="@+id/tv_phone_or_tablet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        custom:fontFamily="@string/font_family_roboto"
+        custom:fontStyle="@string/font_style_light" />
+</LinearLayout>
