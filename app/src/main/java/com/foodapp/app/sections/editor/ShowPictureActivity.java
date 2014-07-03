@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.foodapp.app.R;
@@ -17,14 +18,22 @@ public class ShowPictureActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_picture);
 
-        String imagePath = getIntent().getExtras().getString("path");
-        File imgFile = new File(imagePath);
-        if (imgFile.exists()) {
+        Bundle extras = getIntent().getExtras();
+        String imagePath;
+        if (extras != null) {
+            imagePath = getIntent().getExtras().getString("path");
+            if (!TextUtils.isEmpty(imagePath)) {
+                File imgFile = new File(imagePath);
+                if (imgFile.exists()) {
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-            ImageView myImage = (ImageView) findViewById(R.id.photo);
-            myImage.setImageBitmap(myBitmap);
+                    ImageView myImage = (ImageView) findViewById(R.id.photo);
+                    myImage.setImageBitmap(myBitmap);
+                }
+            } else {
+                // TODO: notify user with some error message!!
+            }
         }
     }
 }
